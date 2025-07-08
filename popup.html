@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Unified Cart</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Unified Shopping Cart</h1>
+
+        <section class="add-item-section">
+            <h2>Add Item (Manual / Scraped)</h2>
+            <p id="scrapeStatus" class="status-message"></p> 
+            <div class="input-group">
+                <label for="itemName">Item Name:</label>
+                <input id="itemName" type="text" placeholder="e.g., Laptop, Shoes">
+            </div>
+            <div class="input-group">
+                <label for="itemPrice">Price ($):</label>
+                <input id="itemPrice" type="number" step="0.01" placeholder="e.g., 1200.50">
+            </div>
+            <div class="input-group">
+                <label for="itemQuantity">Quantity:</label>
+                <input id="itemQuantity" type="number" min="1" value="1">
+            </div>
+            <button id="addItemBtn">Add to Cart</button>
+            <button id="scrapeProductBtn">Scrape Product Info</button>
+        </section>
+
+        <section class="cart-section">
+            <h2>Your Unified Cart</h2>
+            <ul id="cartItemsList">
+                </ul>
+            <h3 id="cartTotal">Total: $0.00</h3>
+            <div class="cart-actions">
+                <button id="buyAllBtn">Simulated Buy All</button>
+                <button id="generateReceiptBtn">Generate Receipt/Itinerary (AI)</button>
+            </div>
+        </section>
+
+        <section class="receipt-section">
+            <h2>AI Generated Receipt/Itinerary</h2>
+            <pre id="receiptOutput"></pre>
+            <p id="aiStatus" class="status-message"></p>
+        </section>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

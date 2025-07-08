@@ -1,0 +1,48 @@
+// @ts-nocheck
+// content-script.js
+
+// This script will be injected into the current tab by the popup.js
+// It attempts to scrape product name and price using common selectors.
+// !!! IMPORTANT: This is a very generic approach and will likely need
+// specific selectors for different websites. !!!
+
+(function() {
+    function scrapeProductInfo() {
+        let productName = null;
+        let productPrice = null;
+
+        // Try to find product name
+        // Common selectors for product name: H1, specific product name classes/IDs
+        productName = document.querySelector('h1[itemprop="name"], h1.product-title, .product-name, [data-qa="product_name"]')?.textContent.trim();
+        if (!productName) {
+            // Fallback for less common or less specific selectors
+            productName = document.querySelector('.product-info h2, .item-title, .title-wrapper h1')?.textContent.trim();
+        }
+
+        // Try to find product price
+        // Common selectors for price: spans, divs with price classes/IDs, often within "itemprop=price"
+        let priceElement = document.querySelector('[itemprop="price"], .product-price, .price-display, .current-price, [data-qa="price"]');
+        if (priceElement) {
+            // Extract text and try to parse number, removing currency symbols, commas
+            let priceText = priceElement.textContent.trim().replace(/[^0-9.,]+/g, ''); // Remove non-numeric/non-decimal chars
+            // Handle comma as decimal separator if present and no period
+            if (priceText.includes(',') && !priceText.includes('.')) {
+                priceText = priceText.replace(',', '.');
+            }
+            productPrice = parseFloat(priceText);
+            if (isNaN(productPrice)) {
+                productPrice = null; // If parsing fails
+            }
+        }
+
+        // Return the scraped data
+        return {
+            name: productName,
+            price: productPrice
+        };
+    }
+
+    // Execute the scraping function and return the result
+    // This result will be caught by chrome.scripting.executeScript in popup.js
+    return scrapeProductInfo();
+})();

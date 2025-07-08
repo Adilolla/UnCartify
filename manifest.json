@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Unified Cart Extension",
+  "version": "1.0",
+  "description": "Aggregates a simulated shopping cart and uses AI to generate receipts/itineraries.",
+  "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+          "16": "hello_extensions.png",
+          "48": "hello_extensions.png",
+          "128": "hello_extensions.png"
+      }
+  },
+  "permissions": [
+      "storage",
+      "activeTab",
+      "scripting"
+  ],
+  "host_permissions": [
+      "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+      "service_worker": "background.js"
+  },
+  "icons": {
+      "16": "hello_extensions.png",
+      "48": "hello_extensions.png",
+      "128": "hello_extensions.png"
+  }
+}
